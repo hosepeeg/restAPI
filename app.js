@@ -1,36 +1,45 @@
-const express = require('express') //this imports the express module
+const express = require('express'); // this imports the express module
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv/config');
-//MIDDLEWARES
+
+//middlewares
+app.use(cors());
+app.use(bodyParser.json());
+
+//Middlewares
 /*
 app.use('/posts', () => {
-    console.log('this is a middleware running');
+   console.log('this is a middleware running');
 });
 */
-//IMPORT ROUTES
+
+//Import Rules
 const postsRoute = require('./routes/posts');
 
 app.use('/posts', postsRoute);
-//app.use('/user', userRoute);
+//app.use('/user', userRoute);   //this is if you were to need another route to another page for example users page
 
 //ROUTES
 app.get('/', (req, res) => {
-    res.send("we are home");
+    res.send('we are on home yesterday');
 });
 
 
-//app.get - GETS INFO
-//app.post - SENDS INFO
-//app.delete - REMOVES AN ITEM
-//app.patch - UPDATES AN ITEM
+// GET - GETS INFO
+// POST - SENDS INFO
+// DELETE - REMOVES AN ITEM
+// PATCH - UPDATES AN ITEM
 
-//CONNECT TO DB
+//Connect to DB
 mongoose.connect(
     process.env.DB_CONNECTION,
-    { useNewUrlParser: true},
+    { useNewUrlParser: true },
     () => console.log('connected to DB!')
 );
 
+
 //HOW TO START LISTENING TO THE SERVER
-app.listen(3000) //port is 3000
+app.listen(3000); //port is 3000
